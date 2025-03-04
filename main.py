@@ -30,15 +30,38 @@ class Estados(Enum):
     SE = 25
     TO = 26
 
+
+
 class GrafoEstados:
     def __init__(self, number_of_vertices):
         self.number_of_vertices = number_of_vertices
         self.adjacency_matrix = [[0] * self.number_of_vertices for _ in range(self.number_of_vertices)] 
+        self.incidence_matrix = [[0] * number_of_vertices for _ in range(number_of_vertices)]
         self.states = [e.name for e in Estados]
+        self.edges = []
+        self.index_list = []
+        self.adjacency_list = []
 
     def add_edge(self, i, j):
         self.adjacency_matrix[i][j] = 1
         self.adjacency_matrix[j][i] = 1
+
+        self.incidence_matrix[i][j] = 1
+        self.incidence_matrix[j][i] = 1
+        
+        self.edges.append((i, j))
+
+
+    def generate_indexed_list(self):
+        cursor = 0
+        for i in range(len(self.adjacency_matrix)):
+            self.index_list.append(cursor)
+            cursor = cursor + self.adjacency_matrix[i].count(1)
+
+        for i in range(len(self.adjacency_matrix)):
+            for j in range(len(self.adjacency_matrix[i])):
+                if self.adjacency_matrix[i][j] == 1:
+                    self.adjacency_list.append(j)
 
     def generate_histogram_data(self):
         histogram = []
@@ -50,7 +73,30 @@ class GrafoEstados:
             histogram.append(sum)
         
         return histogram
+    
+    def get_incidence_matrix(self):
+        num_edges = len(self.edges)
+        incidence_matrix = [[0] * num_edges for _ in range(self.number_of_vertices)]
+        
+        for edge_index, (start, end) in enumerate(self.edges):
+            incidence_matrix[start][edge_index] = 1
+            incidence_matrix[end][edge_index] = 1
+        
+        return incidence_matrix
 
+    def get_adjacent_vertices(self, vertex):
+        if vertex < 1 or vertex >= len(self.index_list):
+            return []  # Retorna lista vazia se o vértice não for válido
+        
+        start = self.index_list[vertex]  # Obtém o índice inicial na lista B
+
+        if vertex == len(self.index_list) - 1:
+            end = -1
+        else:
+            end = self.index_list[vertex + 1]  # Obtém o índice final na lista B
+        
+        return self.adjacency_list[start:end]  # Retorna os vértices adjacentes
+    
 
     def print_histogram(self):
         
@@ -79,6 +125,14 @@ class GrafoEstados:
         y = self.generate_histogram_data()
 
         plt.bar(x, y)
+        plt.show()
+    
+    def render_adjacency_matrix(self):
+        plt.matshow(self.adjacency_matrix)
+        plt.show()
+
+    def render_incidence_matrix(self):
+        plt.matshow(self.get_incidence_matrix())
         plt.show()
 
     def print_adjacency_matrix(self):
@@ -157,4 +211,10 @@ if __name__ == "__main__":
     # grafo.print_adjacency_matrix()
     # grafo.plot_histogram()
     # grafo.print_histogram()
-    grafo.render_histogram()
+    # grafo.render_histogram()
+    # grafo.render_adjacency_matrix()
+    # grafo.render_incidence_matrix()
+
+    grafo.generate_indexed_list()
+
+    print(grafo.get_adjacent_vertices(26))
