@@ -1,5 +1,6 @@
 from enum import Enum
 import matplotlib.pyplot as plt
+from collections import Counter
 
 class Estados(Enum):
     AC = 0
@@ -126,6 +127,18 @@ class GrafoEstados:
 
         plt.bar(x, y)
         plt.show()
+        
+    def plot_grau_histogram(self):
+        graus = self.generate_histogram_data()
+        contagem = Counter(graus)
+        graus_unicos = sorted(contagem.keys())
+        quantidades = [contagem[g] for g in graus_unicos]
+        
+        plt.bar(graus_unicos, quantidades, tick_label=graus_unicos)
+        plt.xlabel("Grau do Estado")
+        plt.ylabel("Quantidade de Estados")
+        plt.title("Distribuição dos Graus dos Estados")
+        plt.show()
     
     def render_adjacency_matrix(self):
         plt.matshow(self.adjacency_matrix)
@@ -214,6 +227,7 @@ if __name__ == "__main__":
     # grafo.render_histogram()
     # grafo.render_adjacency_matrix()
     # grafo.render_incidence_matrix()
+    grafo.plot_grau_histogram()
 
     grafo.generate_indexed_list()
 
