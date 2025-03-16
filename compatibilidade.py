@@ -151,6 +151,34 @@ if __name__ == "__main__":
     grafo.add_edge(Vertices.D.value, Vertices.E.value)
     grafo.add_edge(Vertices.F.value, Vertices.G.value)
     grafo.add_edge(Vertices.G.value, Vertices.A.value)
+    
+    
+    #caso 1
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.C.value, Vertices.G.value)
+    grafo.add_edge(Vertices.B.value, Vertices.D.value)
+    grafo.add_edge(Vertices.B.value, Vertices.E.value)
+    grafo.add_edge(Vertices.D.value, Vertices.F.value)
+    grafo.add_edge(Vertices.E.value, Vertices.G.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    
+    #caso 2
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    grafo.add_edge(Vertices.B.value, Vertices.D.value)
+    grafo.add_edge(Vertices.B.value, Vertices.E.value)
+    grafo.add_edge(Vertices.C.value, Vertices.G.value)
+    grafo.add_edge(Vertices.E.value, Vertices.G.value)
+    
+    #caso 3
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    grafo.add_edge(Vertices.B.value, Vertices.D.value)
+    
+    #caso 4
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    
    
 
     # grafo.print_adjacency_matrix()
