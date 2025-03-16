@@ -2,43 +2,24 @@ from enum import Enum
 import matplotlib.pyplot as plt
 from collections import Counter
 
-class Estados(Enum):
-    AC = 0
-    AL = 1
-    AP = 2
-    AM = 3
-    BA = 4
-    CE = 5
-    DF = 6
-    ES = 7
-    GO = 8
-    MA = 9
-    MT = 10
-    MS = 11
-    MG = 12
-    PA = 13
-    PB = 14
-    PR = 15
-    PE = 16
-    PI = 17
-    RJ = 18
-    RN = 19
-    RS = 20
-    RO = 21
-    RR = 22
-    SC = 23
-    SP = 24
-    SE = 25
-    TO = 26
+class Vertices(Enum):
+    A = 0
+    B = 1
+    C = 2
+    D = 3
+    E = 4
+    F = 5
+    G = 6
+    
 
 
 
-class GrafoEstados:
+class GrafoVertices:
     def __init__(self, number_of_vertices):
         self.number_of_vertices = number_of_vertices
         self.adjacency_matrix = [[0] * self.number_of_vertices for _ in range(self.number_of_vertices)] 
         self.incidence_matrix = [[0] * number_of_vertices for _ in range(number_of_vertices)]
-        self.states = [e.name for e in Estados]
+        self.states = [e.name for e in Vertices]
         self.edges = []
         self.index_list = []
         self.adjacency_list = []
@@ -135,9 +116,6 @@ class GrafoEstados:
         quantidades = [contagem[g] for g in graus_unicos]
         
         plt.bar(graus_unicos, quantidades, tick_label=graus_unicos)
-        plt.xlabel("Grau do Estado")
-        plt.ylabel("Quantidade de Estados")
-        plt.title("Distribuição dos Graus dos Estados")
         plt.show()
     
     def render_adjacency_matrix(self):
@@ -163,63 +141,45 @@ class GrafoEstados:
             i += 1
 
 if __name__ == "__main__":
-    grafo = GrafoEstados(27)
-
-    grafo.add_edge(Estados.AC.value, Estados.AM.value)
-    grafo.add_edge(Estados.AC.value, Estados.RO.value)
-    grafo.add_edge(Estados.AL.value, Estados.SE.value)
-    grafo.add_edge(Estados.AL.value, Estados.PE.value)
-    grafo.add_edge(Estados.AL.value, Estados.BA.value)
-    grafo.add_edge(Estados.AP.value, Estados.PA.value)
-    grafo.add_edge(Estados.AM.value, Estados.PA.value)
-    grafo.add_edge(Estados.AM.value, Estados.RO.value)
-    grafo.add_edge(Estados.AM.value, Estados.RR.value)
-    grafo.add_edge(Estados.AM.value, Estados.MT.value)
-    grafo.add_edge(Estados.BA.value, Estados.TO.value)
-    grafo.add_edge(Estados.BA.value, Estados.SE.value)
-    grafo.add_edge(Estados.BA.value, Estados.PI.value)
-    grafo.add_edge(Estados.BA.value, Estados.MG.value)
-    grafo.add_edge(Estados.BA.value, Estados.GO.value)
-    grafo.add_edge(Estados.BA.value, Estados.AL.value)
-    grafo.add_edge(Estados.BA.value, Estados.PE.value)
-    grafo.add_edge(Estados.CE.value, Estados.RN.value)
-    grafo.add_edge(Estados.CE.value, Estados.PB.value)
-    grafo.add_edge(Estados.CE.value, Estados.PI.value)
-    grafo.add_edge(Estados.CE.value, Estados.PE.value)
-    grafo.add_edge(Estados.ES.value, Estados.RJ.value)
-    grafo.add_edge(Estados.ES.value, Estados.MG.value)
-    grafo.add_edge(Estados.ES.value, Estados.BA.value)
-    grafo.add_edge(Estados.GO.value, Estados.TO.value)
-    grafo.add_edge(Estados.GO.value, Estados.MT.value)
-    grafo.add_edge(Estados.GO.value, Estados.MS.value)
-    grafo.add_edge(Estados.GO.value, Estados.MG.value)
-    grafo.add_edge(Estados.MA.value, Estados.PI.value)
-    grafo.add_edge(Estados.MA.value, Estados.TO.value)
-    grafo.add_edge(Estados.MA.value, Estados.PA.value)
-    grafo.add_edge(Estados.MT.value, Estados.MS.value)
-    grafo.add_edge(Estados.MT.value, Estados.RO.value)
-    grafo.add_edge(Estados.MT.value, Estados.TO.value)
-    grafo.add_edge(Estados.MT.value, Estados.PA.value)
-    grafo.add_edge(Estados.MS.value, Estados.MG.value)
-    grafo.add_edge(Estados.MS.value, Estados.SP.value)
-    grafo.add_edge(Estados.MS.value, Estados.PR.value)
-    grafo.add_edge(Estados.MG.value, Estados.RJ.value)
-    grafo.add_edge(Estados.MG.value, Estados.SP.value)
-    grafo.add_edge(Estados.PA.value, Estados.TO.value)
-    grafo.add_edge(Estados.PB.value, Estados.RN.value)
-    grafo.add_edge(Estados.PB.value, Estados.PE.value)
-    grafo.add_edge(Estados.PR.value, Estados.SC.value)
-    grafo.add_edge(Estados.PR.value, Estados.SP.value)
-    grafo.add_edge(Estados.PE.value, Estados.AL.value)
-    grafo.add_edge(Estados.PE.value, Estados.PI.value)
-    grafo.add_edge(Estados.PI.value, Estados.TO.value)
-    grafo.add_edge(Estados.RJ.value, Estados.SP.value)
-    grafo.add_edge(Estados.RS.value, Estados.SC.value)
-    grafo.add_edge(Estados.RR.value, Estados.PA.value)
-    grafo.add_edge(Estados.SC.value, Estados.PR.value)
-    grafo.add_edge(Estados.DF.value, Estados.MG.value)
-    grafo.add_edge(Estados.DF.value, Estados.GO.value)
-
+    grafo = GrafoVertices(7)
+    
+    
+    #padrão de todos
+    grafo.add_edge(Vertices.A.value, Vertices.B.value)
+    grafo.add_edge(Vertices.B.value, Vertices.C.value)
+    grafo.add_edge(Vertices.C.value, Vertices.D.value)
+    grafo.add_edge(Vertices.D.value, Vertices.E.value)
+    grafo.add_edge(Vertices.F.value, Vertices.G.value)
+    grafo.add_edge(Vertices.G.value, Vertices.A.value)
+    
+    
+    #caso 1
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.C.value, Vertices.G.value)
+    grafo.add_edge(Vertices.B.value, Vertices.D.value)
+    grafo.add_edge(Vertices.B.value, Vertices.E.value)
+    grafo.add_edge(Vertices.D.value, Vertices.F.value)
+    grafo.add_edge(Vertices.E.value, Vertices.G.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    
+    #caso 2
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    grafo.add_edge(Vertices.B.value, Vertices.D.value)
+    grafo.add_edge(Vertices.B.value, Vertices.E.value)
+    grafo.add_edge(Vertices.C.value, Vertices.G.value)
+    grafo.add_edge(Vertices.E.value, Vertices.G.value)
+    
+    #caso 3
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    grafo.add_edge(Vertices.B.value, Vertices.D.value)
+    
+    #caso 4
+    grafo.add_edge(Vertices.A.value, Vertices.C.value)
+    grafo.add_edge(Vertices.A.value, Vertices.F.value)
+    
+   
 
     # grafo.print_adjacency_matrix()
     # grafo.plot_histogram()
@@ -230,5 +190,3 @@ if __name__ == "__main__":
     grafo.plot_grau_histogram()
 
     grafo.generate_indexed_list()
-
-    print(grafo.get_adjacent_vertices(26))
