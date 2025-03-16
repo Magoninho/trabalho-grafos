@@ -14,7 +14,7 @@ class Vertices(Enum):
 
 
 
-class GrafoVertices:
+class Grafo:
     def __init__(self, number_of_vertices):
         self.number_of_vertices = number_of_vertices
         self.adjacency_matrix = [[0] * self.number_of_vertices for _ in range(self.number_of_vertices)] 
@@ -34,6 +34,91 @@ class GrafoVertices:
         self.edges.append((i, j))
 
 
+    def adjacency_matrix_to_list(self, matrix):
+        n = len(matrix)
+        graph = {}
+        
+        for i in range(n):
+            graph[i] = []
+            for j in range(n):
+                if matrix[i][j] != 0:
+                    graph[i].append(j)
+    
+        return graph
+    
+    def follows_dirac_theorem(self):
+        graph = self.adjacency_matrix_to_list(self.adjacency_matrix)
+        n = len(graph)
+        if n < 3:
+            return False
+        threshold = n / 2
+        for node in graph:
+            if len(graph[node]) < threshold:
+                return False
+        return True
+
+    def follows_ore_theorem(self):
+        graph = self.adjacency_matrix_to_list(self.adjacency_matrix)
+        n = len(graph)
+        
+        if n < 3:
+            return False
+
+        # Check all pairs of non-adjacent vertices
+        for u in range(n):
+            for v in range(u + 1, n):
+                if v not in graph[u]:  # only check non-adjacent pairs
+                    deg_u = len(graph[u])
+                    deg_v = len(graph[v])
+                    if deg_u + deg_v < n:
+                        return False
+
+        return True
+    
+    def is_complete_graph(self, graph):
+        n = len(graph)
+        for node, neighbors in graph.items():
+            if len(neighbors) != n - 1:
+                return False
+        return True
+
+    def bondy_chvatal_closure(self, graph):
+        """
+        Applies the Bondy-Chvátal closure to the graph.
+        
+        Parameters:
+            graph (dict): Adjacency list.
+
+        Returns:
+            dict: Modified graph with closure applied.
+        """
+        n = len(graph)
+        changed = True
+
+        while changed:
+            changed = False
+            # Generate a set of current non-adjacent pairs
+            for u in range(n):
+                for v in range(u + 1, n):
+                    if v not in graph[u]:
+                        deg_u = len(graph[u])
+                        deg_v = len(graph[v])
+                        if deg_u + deg_v >= n:
+                            # Add edge u-v
+                            graph[u].append(v)
+                            graph[v].append(u)
+                            changed = True
+        return graph
+
+    def follows_bondy_chvatal_theorem(self):
+        graph = self.adjacency_matrix_to_list(self.adjacency_matrix)
+        if len(graph) < 3:
+            return False
+
+        closure = self.bondy_chvatal_closure(graph)
+        return self.is_complete_graph(closure)
+
+    
     def generate_indexed_list(self):
         cursor = 0
         for i in range(len(self.adjacency_matrix)):
@@ -140,53 +225,56 @@ class GrafoVertices:
             print()
             i += 1
 
-if __name__ == "__main__":
-    grafo = GrafoVertices(7)
-    
-    
-    #padrão de todos
-    grafo.add_edge(Vertices.A.value, Vertices.B.value)
-    grafo.add_edge(Vertices.B.value, Vertices.C.value)
-    grafo.add_edge(Vertices.C.value, Vertices.D.value)
-    grafo.add_edge(Vertices.D.value, Vertices.E.value)
-    grafo.add_edge(Vertices.F.value, Vertices.G.value)
-    grafo.add_edge(Vertices.G.value, Vertices.A.value)
-    
-    
-    #caso 1
-    grafo.add_edge(Vertices.A.value, Vertices.C.value)
-    grafo.add_edge(Vertices.C.value, Vertices.G.value)
-    grafo.add_edge(Vertices.B.value, Vertices.D.value)
-    grafo.add_edge(Vertices.B.value, Vertices.E.value)
-    grafo.add_edge(Vertices.D.value, Vertices.F.value)
-    grafo.add_edge(Vertices.E.value, Vertices.G.value)
-    grafo.add_edge(Vertices.A.value, Vertices.F.value)
-    
-    #caso 2
-    grafo.add_edge(Vertices.A.value, Vertices.C.value)
-    grafo.add_edge(Vertices.A.value, Vertices.F.value)
-    grafo.add_edge(Vertices.B.value, Vertices.D.value)
-    grafo.add_edge(Vertices.B.value, Vertices.E.value)
-    grafo.add_edge(Vertices.C.value, Vertices.G.value)
-    grafo.add_edge(Vertices.E.value, Vertices.G.value)
-    
-    #caso 3
-    grafo.add_edge(Vertices.A.value, Vertices.C.value)
-    grafo.add_edge(Vertices.A.value, Vertices.F.value)
-    grafo.add_edge(Vertices.B.value, Vertices.D.value)
-    
-    #caso 4
-    grafo.add_edge(Vertices.A.value, Vertices.C.value)
-    grafo.add_edge(Vertices.A.value, Vertices.F.value)
-    
-   
+grafo = Grafo(7)
 
-    # grafo.print_adjacency_matrix()
-    # grafo.plot_histogram()
-    # grafo.print_histogram()
-    # grafo.render_histogram()
-    # grafo.render_adjacency_matrix()
-    # grafo.render_incidence_matrix()
-    grafo.plot_grau_histogram()
 
-    grafo.generate_indexed_list()
+#padrão de todos
+grafo.add_edge(Vertices.A.value, Vertices.B.value)
+grafo.add_edge(Vertices.B.value, Vertices.C.value)
+grafo.add_edge(Vertices.C.value, Vertices.D.value)
+grafo.add_edge(Vertices.D.value, Vertices.E.value)
+grafo.add_edge(Vertices.F.value, Vertices.G.value)
+grafo.add_edge(Vertices.G.value, Vertices.A.value)
+
+
+#caso 1
+grafo.add_edge(Vertices.A.value, Vertices.C.value)
+grafo.add_edge(Vertices.C.value, Vertices.G.value)
+grafo.add_edge(Vertices.B.value, Vertices.D.value)
+grafo.add_edge(Vertices.B.value, Vertices.E.value)
+grafo.add_edge(Vertices.D.value, Vertices.F.value)
+grafo.add_edge(Vertices.E.value, Vertices.G.value)
+grafo.add_edge(Vertices.A.value, Vertices.F.value)
+
+#caso 2
+# grafo.add_edge(Vertices.A.value, Vertices.C.value)
+# grafo.add_edge(Vertices.A.value, Vertices.F.value)
+# grafo.add_edge(Vertices.B.value, Vertices.D.value)
+# grafo.add_edge(Vertices.B.value, Vertices.E.value)
+# grafo.add_edge(Vertices.C.value, Vertices.G.value)
+# grafo.add_edge(Vertices.E.value, Vertices.G.value)
+
+# #caso 3
+# grafo.add_edge(Vertices.A.value, Vertices.C.value)
+# grafo.add_edge(Vertices.A.value, Vertices.F.value)
+# grafo.add_edge(Vertices.B.value, Vertices.D.value)
+
+# #caso 4
+# grafo.add_edge(Vertices.A.value, Vertices.C.value)
+# grafo.add_edge(Vertices.A.value, Vertices.F.value)
+
+
+
+# grafo.print_adjacency_matrix()
+# grafo.plot_histogram()
+# grafo.print_histogram()
+# grafo.render_histogram()
+# grafo.render_adjacency_matrix()
+# grafo.render_incidence_matrix()
+# grafo.plot_grau_histogram()
+
+# grafo.generate_indexed_list()
+
+print("dirac: ", grafo.follows_dirac_theorem())
+print("ore: ", grafo.follows_ore_theorem())
+print("bondy: ", grafo.follows_bondy_chvatal_theorem())
