@@ -46,6 +46,7 @@ class Grafo:
     
         return graph
     
+    # Teorema de Dirac: Um grafo com n >= 3 vertices é hamiltoniano se todo vertice tiver grau >= n / 2
     def follows_dirac_theorem(self):
         graph = self.adjacency_matrix_to_list(self.adjacency_matrix)
         n = len(graph)
@@ -57,6 +58,8 @@ class Grafo:
                 return False
         return True
 
+    # Teorema de Ore: se um grafo simples tiver n >= 3 vertices em que a soma dos graus de cada par não adjacente de
+    # vertices seja >= n, então o grafo é hamiltoniano
     def follows_ore_theorem(self):
         graph = self.adjacency_matrix_to_list(self.adjacency_matrix)
         n = len(graph)
@@ -101,6 +104,7 @@ class Grafo:
                             changed = True
         return graph
 
+    # Teorema de Bondy & Chvatal Se o fechamento do grafo for um grafo completo, então o grafo é hamiltoniano
     def follows_bondy_chvatal_theorem(self):
         graph = self.adjacency_matrix_to_list(self.adjacency_matrix)
         if len(graph) < 3:
