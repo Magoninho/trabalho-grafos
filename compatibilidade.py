@@ -83,15 +83,6 @@ class Grafo:
         return True
 
     def bondy_chvatal_closure(self, graph):
-        """
-        Applies the Bondy-Chvátal closure to the graph.
-        
-        Parameters:
-            graph (dict): Adjacency list.
-
-        Returns:
-            dict: Modified graph with closure applied.
-        """
         n = len(graph)
         changed = True
 
@@ -233,6 +224,7 @@ grafo.add_edge(Vertices.A.value, Vertices.B.value)
 grafo.add_edge(Vertices.B.value, Vertices.C.value)
 grafo.add_edge(Vertices.C.value, Vertices.D.value)
 grafo.add_edge(Vertices.D.value, Vertices.E.value)
+grafo.add_edge(Vertices.E.value, Vertices.F.value)
 grafo.add_edge(Vertices.F.value, Vertices.G.value)
 grafo.add_edge(Vertices.G.value, Vertices.A.value)
 
@@ -274,6 +266,7 @@ grafo.add_edge(Vertices.A.value, Vertices.F.value)
 # grafo.plot_grau_histogram()
 
 # grafo.generate_indexed_list()
+
 
 print("dirac: ", grafo.follows_dirac_theorem())
 print("ore: ", grafo.follows_ore_theorem())
