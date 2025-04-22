@@ -52,6 +52,5 @@ destino = input("Digite a cidade de destino: ").strip().upper()
 caminho = buscar_caminho(grafo, origem, destino)
 if caminho:
     print("Caminho encontrado:", ' -> '.join(caminho))
-    print("Largura do caminho:", (len(caminho)) - 1)
 else:
     print("Nenhum caminho encontrado.")
