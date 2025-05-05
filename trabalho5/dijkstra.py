@@ -1,4 +1,4 @@
-import heapq
+import heapq  # utiliza da biblioteca padrao do python (fila de prioridade)
 
 
 grafo = {
