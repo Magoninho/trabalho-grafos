@@ -5,11 +5,11 @@ n = 5
 INF = float('inf')
 
 W = [
-    [0,   3,   INF, 7,   INF],
-    [8,   0,   2,   INF, INF],
-    [5,   INF, 0,   1,   INF],
-    [2,   INF, INF, 0,   1],
-    [INF, INF, 3,   INF, 0]
+    [0,   2,   INF, 8,   INF],
+    [INF,   0,   3,   INF, INF],
+    [INF,   INF, 0,   INF,   1],
+    [INF,   INF, 4, 0,   INF],
+    [INF, INF, INF,   5, 0]
 ]
 
 d_list = []
